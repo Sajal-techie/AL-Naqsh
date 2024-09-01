@@ -119,6 +119,7 @@ export function AddServices({ onServiceAdded }: AddServicesProps) {
                 value={values.description}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                rows={6}
                 className="border border-gray-300 rounded-md !border-t-blue-gray-200 focus:!border-t-gray-900"
               />
               {touched.description && errors.description && (

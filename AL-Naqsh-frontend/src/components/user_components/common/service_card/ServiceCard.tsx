@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { serviceCardProps } from "./type"; // Adjust the path if necessary
+import Modal from "../service_modal/ServiceModal";
 
 const MAX_DESCRIPTION_LENGTH = 200;
 
@@ -19,7 +20,6 @@ const ServiceCard: React.FC<serviceCardProps> = ({
   description,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const shortDescription =
     description && description.length > MAX_DESCRIPTION_LENGTH
       ? `${description.slice(0, MAX_DESCRIPTION_LENGTH)}...`
@@ -64,39 +64,13 @@ const ServiceCard: React.FC<serviceCardProps> = ({
         )}
       </motion.div>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-8 max-w-lg w-full">
-            <div className="relative w-full h-48">
-              {imgSrc ? (
-                <img
-                  src={imgSrc}
-                  alt={title || "Service Image"}
-                  className="w-full h-full object-cover rounded-t-lg"
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500">No Image Available</span>
-                </div>
-              )}
-            </div>
-            <div className="p-6">
-              <h2 className="text-2xl font-semibold mb-2">
-                {title || "Untitled Service"}
-              </h2>
-              <p className="text-gray-700">{description}</p>
-            </div>
-            <div className="mt-4 text-right">
-              <button
-                onClick={closeModal}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        imgSrc={imgSrc}
+        title={title}
+        description={description}
+      />
     </>
   );
 };
